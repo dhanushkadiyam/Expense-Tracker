@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import api from "../services/api";
 
-function ExpenseList({ setSelectedExpense }) {
-    const [expenses, setExpenses] = useState([]);
+function ExpenseList({ expenses, setExpenses, setSelectedExpense }) {
     useEffect(() => {
 
   const fetchExpenses = async () => {
@@ -31,7 +30,7 @@ function ExpenseList({ setSelectedExpense }) {
 
   fetchExpenses();
 
-  }, []);
+  }, [setExpenses]);
 
   const handleDelete = async (expenseId) => {
 

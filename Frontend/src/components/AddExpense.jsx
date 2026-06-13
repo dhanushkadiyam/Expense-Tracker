@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
 
-function AddExpense({ selectedExpense }) {
+function AddExpense({ selectedExpense, setSelectedExpense, expenses, setExpenses }) {
 
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
@@ -16,7 +16,7 @@ function AddExpense({ selectedExpense }) {
   const token = localStorage.getItem("token");
   let response;
 
-if (selectedExpense) {
+  if (selectedExpense) {
 
   response = await api.put(
     `/expenses/${selectedExpense._id}`,
@@ -52,12 +52,31 @@ if (selectedExpense) {
 
   }
 
-    console.log(response.data);
+  console.log(response.data);
+  if (!selectedExpense) {
+
+  setExpenses([
+    ...expenses,
+    response.data.expense
+  ]);
+
+  }
+  else {
+
+  setExpenses(
+    expenses.map((expense) =>
+      expense._id === selectedExpense._id
+        ? response.data.expense
+        : expense
+    )
+  );
+  }
+  
     setTitle("");
     setAmount("");
     setCategory("");
     setDate("");
-
+   setSelectedExpense(null);
     } catch (error) {
 
     console.log(error.response?.data);
