@@ -1,30 +1,30 @@
 import AddExpense from "../components/AddExpense";
 import ExpenseList from "../components/ExpenseList";
 import { useState } from "react";
+import MainLayout from "../components/Layout/MainLayout";
 
 function Expense() {
   const [selectedExpense, setSelectedExpense] = useState(null);
   const [expenses, setExpenses] = useState([]);
   return (
-    <div>
-      <h1>Expense Page</h1>
+    <MainLayout>
+      <div>
+        <h1>Expense Page</h1>
 
-      <AddExpense
-        selectedExpense={selectedExpense}
-        setSelectedExpense={setSelectedExpense}
-        expenses={expenses}
-        setExpenses={setExpenses}
-/>
+        <AddExpense
+          selectedExpense={selectedExpense}
+          setSelectedExpense={setSelectedExpense}
+          expenses={expenses}
+          setExpenses={setExpenses}
+        />
 
-      <ExpenseList
-        expenses={expenses}
-        setExpenses={setExpenses}
-        setSelectedExpense={setSelectedExpense}
-      />
-      
-      
-      
-    </div>
+        <ExpenseList
+          expenses={expenses}
+          setExpenses={setExpenses}
+          setSelectedExpense={setSelectedExpense}
+        />
+      </div>
+    </MainLayout>
   );
 }
 

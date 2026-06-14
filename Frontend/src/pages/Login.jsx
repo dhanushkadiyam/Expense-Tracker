@@ -3,7 +3,6 @@ import api from "../services/api";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -13,19 +12,16 @@ function Login() {
     e.preventDefault();
 
     try {
+      const response = await api.post("/auth/login", {
+        email,
+        password,
+      });
 
-        const response = await api.post("/auth/login", {
-            email,
-            password
-        });
-
-        console.log(response.data);
-        localStorage.setItem("token", response.data.token);
-        navigate("/dashboard");
+      console.log(response.data);
+      localStorage.setItem("token", response.data.token);
+      navigate("/dashboard");
     } catch (error) {
-
-        console.log(error.response?.data);
-
+      console.log(error.response?.data);
     }
   };
 
@@ -34,7 +30,6 @@ function Login() {
       <h1>Login</h1>
 
       <form onSubmit={handleSubmit}>
-
         <div>
           <label>Email</label>
           <br />
@@ -61,10 +56,7 @@ function Login() {
 
         <br />
 
-        <button type="submit">
-          Login
-        </button>
-
+        <button type="submit">Login</button>
       </form>
     </div>
   );

@@ -3,31 +3,26 @@ import api from "../services/api";
 import { useNavigate } from "react-router-dom";
 
 function Register() {
-
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  try {
-
-    const response = await api.post("/auth/register", {
+    try {
+      const response = await api.post("/auth/register", {
         name,
         email,
-        password
-    });
+        password,
+      });
 
-    console.log(response.data);
-    navigate("/");
-
+      console.log(response.data);
+      navigate("/");
     } catch (error) {
-
-    console.log(error.response?.data);
-
+      console.log(error.response?.data);
     }
   };
   return (
@@ -74,9 +69,7 @@ function Register() {
 
         <br />
 
-        <button type="submit">
-          Register
-        </button>
+        <button type="submit">Register</button>
       </form>
     </div>
   );

@@ -5,13 +5,10 @@ import Dashboard from "./pages/Dashboard";
 import Expense from "./pages/Expense";
 import Income from "./pages/Income";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Navbar from "./components/Navbar";
 
 function App() {
   return (
     <BrowserRouter>
-      <Navbar />
-
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
@@ -39,7 +36,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-        
       </Routes>
     </BrowserRouter>
   );
