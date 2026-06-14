@@ -18,3 +18,15 @@
 .section-item:last-child {
   border-bottom: none;
 }
+
+.charts-container {
+  display: flex;
+  gap: 20px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.chart-box {
+  flex: 1;
+  min-width: 400px;
+}

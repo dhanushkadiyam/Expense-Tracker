@@ -3,6 +3,8 @@ import api from "../services/api";
 import MainLayout from "../components/Layout/MainLayout";
 import StatCard from "../components/Dashboard/StatCard";
 import "./Dashboard.css";
+import PieChartComponent from "../components/Charts/PieChartComponent";
+
 function Dashboard() {
   const [dashboardData, setDashboardData] = useState(null);
 
@@ -44,6 +46,21 @@ function Dashboard() {
               value={`₹${dashboardData?.totalExpense}`}
             />
             <StatCard title="Balance" value={`₹${dashboardData?.balance}`} />
+          </div>
+          <div className="charts-container">
+            <div className="chart-box">
+              <PieChartComponent
+                title="Expense Distribution"
+                items={dashboardData?.allExpenses}
+              />
+            </div>
+
+            <div className="chart-box">
+              <PieChartComponent
+                title="Income Distribution"
+                items={dashboardData?.allIncome}
+              />
+            </div>
           </div>
           <div className="section-card">
             <h2>Recent Expenses</h2>
