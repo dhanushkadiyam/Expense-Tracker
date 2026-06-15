@@ -55,7 +55,19 @@ function IncomeList({ incomes, setIncomes, setSelectedIncome }) {
           <p>Date: {new Date(income.date).toLocaleDateString()}</p>
           <div className="card-buttons">
             <button onClick={() => setSelectedIncome(income)}>Edit</button>
-            <button onClick={() => handleDelete(income._id)}>Delete</button>
+            <button
+              onClick={() => {
+                const confirmed = window.confirm(
+                  "Are you sure you want to delete this income?",
+                );
+
+                if (confirmed) {
+                  handleDelete(income._id);
+                }
+              }}
+            >
+              Delete
+            </button>
           </div>
 
           <hr />

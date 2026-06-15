@@ -58,7 +58,19 @@ function ExpenseList({ expenses, setExpenses, setSelectedExpense }) {
           <p>Date: {new Date(expense.date).toLocaleDateString()}</p>
           <div className="card-buttons">
             <button onClick={() => setSelectedExpense(expense)}>Edit</button>
-            <button onClick={() => handleDelete(expense._id)}>Delete</button>
+            <button
+              onClick={() => {
+                const confirmed = window.confirm(
+                  "Are you sure you want to delete this expense?",
+                );
+
+                if (confirmed) {
+                  handleDelete(expense._id);
+                }
+              }}
+            >
+              Delete
+            </button>
           </div>
 
           <hr />
