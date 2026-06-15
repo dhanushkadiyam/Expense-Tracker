@@ -5,6 +5,7 @@ import MainLayout from "../components/Layout/MainLayout";
 import "./IncExpCommon.css";
 import ExportCSVButton from "../components/ExportCSVButton";
 import ExportPDFButton from "../components/ExportPDFButton";
+
 function Income() {
   const [incomes, setIncomes] = useState([]);
   const [selectedIncome, setSelectedIncome] = useState(null);
@@ -28,7 +29,7 @@ function Income() {
   return (
     <MainLayout>
       <div>
-        <h1>Income Page</h1>
+        <h1>Income Management</h1>{" "}
         <input
           className="search-input"
           type="text"

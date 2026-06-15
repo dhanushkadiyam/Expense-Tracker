@@ -5,9 +5,11 @@ import StatCard from "../components/Dashboard/StatCard";
 import "./Dashboard.css";
 import PieChartComponent from "../components/Charts/PieChartComponent";
 import BarChartComponent from "../components/BarChartComponent";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 function Dashboard() {
   const [dashboardData, setDashboardData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchDashboardData = async () => {
@@ -23,30 +25,38 @@ function Dashboard() {
         console.log(response.data);
 
         setDashboardData(response.data);
+        setLoading(false);
       } catch (error) {
         console.log(error.response?.data);
+        setLoading(false);
       }
     };
 
     fetchDashboardData();
   }, []);
-
+  if (loading) {
+    return <LoadingSpinner text="Loading Dashboard..." />;
+  }
   return (
     <MainLayout>
       <div>
-        <h1>Dashboard Page</h1>
-
+        <h1>Expense Tracker Dashboard</h1>
         <div>
           <div className="cards-container">
             <StatCard
               title="Total Income"
-              value={`₹${dashboardData?.totalIncome}`}
+              value={`₹${dashboardData?.totalIncome?.toLocaleString()}`}
             />
+
             <StatCard
               title="Total Expense"
-              value={`₹${dashboardData?.totalExpense}`}
+              value={`₹${dashboardData?.totalExpense?.toLocaleString()}`}
             />
-            <StatCard title="Balance" value={`₹${dashboardData?.balance}`} />
+
+            <StatCard
+              title="Balance"
+              value={`₹${dashboardData?.balance?.toLocaleString()}`}
+            />
           </div>
           <div className="charts-container">
             <BarChartComponent
@@ -72,7 +82,7 @@ function Dashboard() {
 
             {dashboardData?.recentExpenses?.map((expense) => (
               <div key={expense._id} className="section-item">
-                {expense.title} - ₹{expense.amount}
+                {expense.title} - ₹{expense.amount.toLocaleString()}
               </div>
             ))}
           </div>
@@ -82,7 +92,7 @@ function Dashboard() {
 
             {dashboardData?.recentIncome?.map((income) => (
               <div key={income._id} className="section-item">
-                {income.title} - ₹{income.amount}
+                {income.title} - ₹{income.amount.toLocaleString()}
               </div>
             ))}
           </div>

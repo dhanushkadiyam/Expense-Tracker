@@ -3,10 +3,12 @@ import api from "../services/api";
 import "./ListCard.css";
 import { toast } from "react-toastify";
 import DeleteModal from "./DeleteModal";
+import LoadingSpinner from "./LoadingSpinner";
 
 function IncomeList({ incomes, setIncomes, setSelectedIncome }) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [incomeToDelete, setIncomeToDelete] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchIncomes = async () => {
@@ -20,8 +22,10 @@ function IncomeList({ incomes, setIncomes, setSelectedIncome }) {
         });
 
         setIncomes(response.data);
+        setLoading(false);
       } catch (error) {
         console.log(error.response?.data);
+        setLoading(false);
       }
     };
 
@@ -57,37 +61,42 @@ function IncomeList({ incomes, setIncomes, setSelectedIncome }) {
     setShowDeleteModal(false);
     setIncomeToDelete(null);
   };
-
+  if (loading) {
+    return <LoadingSpinner text="Loading Incomes..." />;
+  }
   return (
     <div>
       <h2>Income List</h2>
+      {incomes.length === 0 ? (
+        <p className="empty-state">No income records found.</p>
+      ) : (
+        incomes.map((income) => (
+          <div key={income._id} className="list-card">
+            <h3>{income.title}</h3>
 
-      {incomes.map((income) => (
-        <div key={income._id} className="list-card">
-          <h3>{income.title}</h3>
+            <p>Amount: ₹{income.amount.toLocaleString()}</p>
 
-          <p>Amount: ₹{income.amount}</p>
+            <p>Category: {income.category}</p>
 
-          <p>Category: {income.category}</p>
+            <p>Date: {new Date(income.date).toLocaleDateString()}</p>
 
-          <p>Date: {new Date(income.date).toLocaleDateString()}</p>
+            <div className="card-buttons">
+              <button onClick={() => setSelectedIncome(income)}>Edit</button>
 
-          <div className="card-buttons">
-            <button onClick={() => setSelectedIncome(income)}>Edit</button>
+              <button
+                onClick={() => {
+                  setIncomeToDelete(income._id);
+                  setShowDeleteModal(true);
+                }}
+              >
+                Delete
+              </button>
+            </div>
 
-            <button
-              onClick={() => {
-                setIncomeToDelete(income._id);
-                setShowDeleteModal(true);
-              }}
-            >
-              Delete
-            </button>
+            <hr />
           </div>
-
-          <hr />
-        </div>
-      ))}
+        ))
+      )}
 
       <DeleteModal
         isOpen={showDeleteModal}

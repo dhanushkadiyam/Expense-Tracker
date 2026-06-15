@@ -43,7 +43,11 @@ function ExportCSVButton({ data, fileName }) {
 
     window.URL.revokeObjectURL(url);
   };
-  return <button onClick={handleExport}>Export CSV</button>;
+  return (
+    <button onClick={handleExport} disabled={!data.length}>
+      Export PDF
+    </button>
+  );
 }
 
 export default ExportCSVButton;

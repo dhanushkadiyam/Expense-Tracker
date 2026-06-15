@@ -25,11 +25,10 @@ function Expense() {
 
     return matchesSearch && matchesCategory;
   });
-
   return (
     <MainLayout>
       <div>
-        <h1>Expense Page</h1>
+        <h1>Expense Management</h1>{" "}
         <input
           className="search-input"
           type="text"

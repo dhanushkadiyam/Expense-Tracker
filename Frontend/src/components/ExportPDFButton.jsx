@@ -35,7 +35,11 @@ function ExportPDFButton({ data, fileName }) {
     doc.text(`Total ${fileName}: ₹${total}`, 14, doc.lastAutoTable.finalY + 15);
     doc.save(`${fileName}.pdf`);
   };
-  return <button onClick={handleExport}>Export PDF</button>;
+  return (
+    <button onClick={handleExport} disabled={!data.length}>
+      Export PDF
+    </button>
+  );
 }
 
 export default ExportPDFButton;
