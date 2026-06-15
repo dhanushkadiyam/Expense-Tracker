@@ -2,6 +2,8 @@ import AddExpense from "../components/AddExpense";
 import ExpenseList from "../components/ExpenseList";
 import { useState } from "react";
 import MainLayout from "../components/Layout/MainLayout";
+import ExportCSVButton from "../components/ExportCSVButton";
+import ExportPDFButton from "../components/ExportPDFButton";
 
 function Expense() {
   const [selectedExpense, setSelectedExpense] = useState(null);
@@ -51,7 +53,8 @@ function Expense() {
           expenses={expenses}
           setExpenses={setExpenses}
         />
-
+        <ExportCSVButton data={filteredExpenses} fileName="expenses" />
+        <ExportPDFButton data={filteredExpenses} fileName="expenses" />
         <ExpenseList
           expenses={filteredExpenses}
           setExpenses={setExpenses}

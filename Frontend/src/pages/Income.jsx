@@ -3,7 +3,8 @@ import AddIncome from "../components/AddIncome";
 import IncomeList from "../components/IncomeList";
 import MainLayout from "../components/Layout/MainLayout";
 import "./IncExpCommon.css";
-
+import ExportCSVButton from "../components/ExportCSVButton";
+import ExportPDFButton from "../components/ExportPDFButton";
 function Income() {
   const [incomes, setIncomes] = useState([]);
   const [selectedIncome, setSelectedIncome] = useState(null);
@@ -51,6 +52,8 @@ function Income() {
           selectedIncome={selectedIncome}
           setSelectedIncome={setSelectedIncome}
         />
+        <ExportCSVButton data={filteredIncomes} fileName="income" />
+        <ExportPDFButton data={filteredIncomes} fileName="income" />
         <IncomeList
           incomes={filteredIncomes}
           setIncomes={setIncomes}
