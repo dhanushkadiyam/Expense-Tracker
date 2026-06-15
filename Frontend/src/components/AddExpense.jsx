@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
 import "./AddIncome.css";
+import { toast } from "react-toastify";
 
 function AddExpense({
   selectedExpense,
@@ -55,6 +56,7 @@ function AddExpense({
       console.log(response.data);
       if (!selectedExpense) {
         setExpenses([...expenses, response.data.expense]);
+        toast.success("Expense added successfully");
       } else {
         setExpenses(
           expenses.map((expense) =>
@@ -63,6 +65,7 @@ function AddExpense({
               : expense,
           ),
         );
+        toast.success("Expense updated successfully");
       }
 
       setTitle("");
@@ -72,6 +75,7 @@ function AddExpense({
       setSelectedExpense(null);
     } catch (error) {
       console.log(error.response?.data);
+      toast.error("Failed to save expense");
     }
   };
 

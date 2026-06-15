@@ -2,6 +2,7 @@ import { useState } from "react";
 import api from "../services/api";
 import { Link, useNavigate } from "react-router-dom";
 import "./Auth.css";
+import { toast } from "react-toastify";
 
 function Register() {
   const [name, setName] = useState("");
@@ -10,13 +11,11 @@ function Register() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
     if (password !== confirmPassword) {
-      setError("Passwords do not match");
+      toast.error("Passwords do not match");
       setLoading(false);
       return;
     }
@@ -30,12 +29,12 @@ function Register() {
 
       console.log(response.data);
       setLoading(false);
+      toast.success("Account created successfully");
       navigate("/");
     } catch (error) {
       console.log(error.response?.data);
 
-      setError(error.response?.data?.message || "Registration failed");
-
+      toast.error(error.response?.data?.message || "Registration failed");
       setLoading(false);
     }
   };
@@ -91,7 +90,6 @@ function Register() {
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </div>
-          {error && <p className="field-error">{error}</p>}
           <br />{" "}
           <button type="submit" className="auth-button" disabled={loading}>
             {loading ? "Creating account..." : "Register"}

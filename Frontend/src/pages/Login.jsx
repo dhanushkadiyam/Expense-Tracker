@@ -2,12 +2,12 @@ import { useState } from "react";
 import api from "../services/api";
 import { Link, useNavigate } from "react-router-dom";
 import "./Auth.css";
+import { toast } from "react-toastify";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -22,11 +22,14 @@ function Login() {
 
       console.log(response.data);
       localStorage.setItem("token", response.data.token);
+
+      toast.success("Login successful");
+
       setLoading(false);
       navigate("/dashboard");
     } catch (error) {
       console.log(error.response?.data);
-      setError("Invalid email or password");
+      toast.error("Invalid email or password");
       setLoading(false);
     }
   };
@@ -62,7 +65,6 @@ function Login() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          {error && <p className="auth-error">{error}</p>}
           <br />
           <button type="submit" className="auth-button" disabled={loading}>
             {loading ? "Logging in..." : "Login"}

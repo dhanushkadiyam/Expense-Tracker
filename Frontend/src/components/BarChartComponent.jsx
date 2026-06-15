@@ -6,7 +6,6 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-  CartesianGrid,
 } from "recharts";
 function BarChartComponent({ income, expenses }) {
   console.log(income);

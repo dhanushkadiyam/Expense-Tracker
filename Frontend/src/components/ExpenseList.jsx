@@ -1,8 +1,12 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import api from "../services/api";
 import "./ListCard.css";
+import { toast } from "react-toastify";
+import DeleteModal from "./DeleteModal";
 
 function ExpenseList({ expenses, setExpenses, setSelectedExpense }) {
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [expenseToDelete, setExpenseToDelete] = useState(null);
   useEffect(() => {
     const fetchExpenses = async () => {
       try {
@@ -38,9 +42,19 @@ function ExpenseList({ expenses, setExpenses, setSelectedExpense }) {
       console.log(response.data);
 
       setExpenses(expenses.filter((expense) => expense._id !== expenseId));
+      toast.success("Expense deleted successfully");
     } catch (error) {
       console.log(error.response?.data);
+      toast.error("Failed to delete expense");
     }
+  };
+  const confirmDelete = async () => {
+    if (!expenseToDelete) return;
+
+    await handleDelete(expenseToDelete);
+
+    setShowDeleteModal(false);
+    setExpenseToDelete(null);
   };
 
   return (
@@ -60,13 +74,8 @@ function ExpenseList({ expenses, setExpenses, setSelectedExpense }) {
             <button onClick={() => setSelectedExpense(expense)}>Edit</button>
             <button
               onClick={() => {
-                const confirmed = window.confirm(
-                  "Are you sure you want to delete this expense?",
-                );
-
-                if (confirmed) {
-                  handleDelete(expense._id);
-                }
+                setExpenseToDelete(expense._id);
+                setShowDeleteModal(true);
               }}
             >
               Delete
@@ -76,6 +85,16 @@ function ExpenseList({ expenses, setExpenses, setSelectedExpense }) {
           <hr />
         </div>
       ))}
+      <DeleteModal
+        isOpen={showDeleteModal}
+        title="Delete Expense"
+        message="Are you sure you want to delete this expense?"
+        onCancel={() => {
+          setShowDeleteModal(false);
+          setExpenseToDelete(null);
+        }}
+        onConfirm={confirmDelete}
+      />
     </div>
   );
 }

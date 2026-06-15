@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
 import "./AddIncome.css";
+import { toast } from "react-toastify";
 
 function AddIncome({ incomes, setIncomes, selectedIncome, setSelectedIncome }) {
   const [title, setTitle] = useState("");
@@ -52,12 +53,14 @@ function AddIncome({ incomes, setIncomes, selectedIncome, setSelectedIncome }) {
 
       if (!selectedIncome) {
         setIncomes([...incomes, response.data.income]);
+        toast.success("Income added successfully");
       } else {
         setIncomes(
           incomes.map((income) =>
             income._id === selectedIncome._id ? response.data.income : income,
           ),
         );
+        toast.success("Income updated successfully");
       }
       setTitle("");
       setAmount("");
@@ -66,6 +69,8 @@ function AddIncome({ incomes, setIncomes, selectedIncome, setSelectedIncome }) {
       setSelectedIncome(null);
     } catch (error) {
       console.log(error.response?.data);
+
+      toast.error("Failed to save income");
     }
   };
   useEffect(() => {
