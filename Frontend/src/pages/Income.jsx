@@ -8,10 +8,22 @@ function Income() {
   const [incomes, setIncomes] = useState([]);
   const [selectedIncome, setSelectedIncome] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
-  const filteredIncomes = incomes.filter((income) =>
-    income.title.toLowerCase().includes(searchTerm.toLowerCase()),
-  );
+  const categories = [
+    "All",
+    ...new Set(incomes.map((income) => income.category)),
+  ];
+  const filteredIncomes = incomes.filter((income) => {
+    const matchesSearch = income.title
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+
+    const matchesCategory =
+      selectedCategory === "All" || income.category === selectedCategory;
+
+    return matchesSearch && matchesCategory;
+  });
   return (
     <MainLayout>
       <div>
@@ -23,7 +35,16 @@ function Income() {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-
+        <select
+          value={selectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+        >
+          {categories.map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
+        </select>
         <AddIncome
           incomes={incomes}
           setIncomes={setIncomes}

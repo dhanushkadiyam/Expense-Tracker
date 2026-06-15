@@ -7,9 +7,23 @@ function Expense() {
   const [selectedExpense, setSelectedExpense] = useState(null);
   const [expenses, setExpenses] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const filteredExpenses = expenses.filter((expense) =>
-    expense.title.toLowerCase().includes(searchTerm.toLowerCase()),
-  );
+  const [selectedCategory, setSelectedCategory] = useState("All");
+
+  const categories = [
+    "All",
+    ...new Set(expenses.map((expense) => expense.category)),
+  ];
+  const filteredExpenses = expenses.filter((expense) => {
+    const matchesSearch = expense.title
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+
+    const matchesCategory =
+      selectedCategory === "All" || expense.category === selectedCategory;
+
+    return matchesSearch && matchesCategory;
+  });
+
   return (
     <MainLayout>
       <div>
@@ -21,6 +35,16 @@ function Expense() {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
+        <select
+          value={selectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+        >
+          {categories.map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
+        </select>
         <AddExpense
           selectedExpense={selectedExpense}
           setSelectedExpense={setSelectedExpense}
