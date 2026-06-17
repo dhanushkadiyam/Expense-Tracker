@@ -4,10 +4,11 @@ import "./AddIncome.css";
 import { toast } from "react-toastify";
 
 function AddExpense({
-  selectedExpense,
-  setSelectedExpense,
   expenses,
   setExpenses,
+  selectedExpense,
+  setSelectedExpense,
+  setShowExpenseModal,
 }) {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
@@ -72,7 +73,9 @@ function AddExpense({
       setAmount("");
       setCategory("");
       setDate("");
+
       setSelectedExpense(null);
+      setShowExpenseModal(false);
     } catch (error) {
       console.log(error.response?.data);
       toast.error("Failed to save expense");
@@ -91,7 +94,7 @@ function AddExpense({
 
   return (
     <div className="form-container">
-      <h2>Add Expense</h2>
+      <h2>{selectedExpense ? "Edit Expense" : "Add Expense"}</h2>
 
       <form onSubmit={handleSubmit}>
         <div className="form-group">

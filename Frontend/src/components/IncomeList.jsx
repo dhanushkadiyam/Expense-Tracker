@@ -4,8 +4,14 @@ import "./ListCard.css";
 import { toast } from "react-toastify";
 import DeleteModal from "./DeleteModal";
 import LoadingSpinner from "./LoadingSpinner";
+import { FaEdit, FaTrash, FaMoneyBillWave } from "react-icons/fa";
 
-function IncomeList({ incomes, setIncomes, setSelectedIncome }) {
+function IncomeList({
+  incomes,
+  setIncomes,
+  setSelectedIncome,
+  setShowIncomeModal,
+}) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [incomeToDelete, setIncomeToDelete] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -65,38 +71,60 @@ function IncomeList({ incomes, setIncomes, setSelectedIncome }) {
     return <LoadingSpinner text="Loading Incomes..." />;
   }
   return (
-    <div>
-      <h2>Income List</h2>
-      {incomes.length === 0 ? (
-        <p className="empty-state">No income records found.</p>
-      ) : (
-        incomes.map((income) => (
-          <div key={income._id} className="list-card">
-            <h3>{income.title}</h3>
+    <div className="transactions-wrapper">
+      <h2 className="list-title">Recent Income Transactions</h2>
+      <div className="transactions-container">
+        {incomes.length === 0 ? (
+          <p className="empty-state">No income records found.</p>
+        ) : (
+          incomes.map((income) => (
+            <div key={income._id} className="transaction-row">
+              <div className="transaction-main">
+                <div className="transaction-left">
+                  <div className="transaction-title-row">
+                    <FaMoneyBillWave className="income-icon" />
 
-            <p>Amount: ₹{income.amount.toLocaleString()}</p>
+                    <h3>{income.title}</h3>
+                  </div>
 
-            <p>Category: {income.category}</p>
+                  <p>
+                    {income.category} •{" "}
+                    {new Date(income.date).toLocaleDateString("en-GB", {
+                      day: "numeric",
+                      month: "short",
+                      year: "numeric",
+                    })}
+                  </p>
+                </div>
 
-            <p>Date: {new Date(income.date).toLocaleDateString()}</p>
+                <div className="transaction-right">
+                  <span className="transaction-amount">
+                    ₹{income.amount.toLocaleString()}
+                  </span>
 
-            <div className="card-buttons">
-              <button onClick={() => setSelectedIncome(income)}>Edit</button>
+                  <button
+                    onClick={() => {
+                      setSelectedIncome(income);
+                      setShowIncomeModal(true);
+                    }}
+                  >
+                    <FaEdit />
+                  </button>
 
-              <button
-                onClick={() => {
-                  setIncomeToDelete(income._id);
-                  setShowDeleteModal(true);
-                }}
-              >
-                Delete
-              </button>
+                  <button
+                    onClick={() => {
+                      setIncomeToDelete(income._id);
+                      setShowDeleteModal(true);
+                    }}
+                  >
+                    <FaTrash />
+                  </button>
+                </div>
+              </div>
             </div>
-
-            <hr />
-          </div>
-        ))
-      )}
+          ))
+        )}
+      </div>
 
       <DeleteModal
         isOpen={showDeleteModal}

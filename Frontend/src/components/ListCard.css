@@ -21,3 +21,104 @@
   color: #6b7280;
   font-size: 16px;
 }
+.transaction-row {
+  padding: 18px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.transaction-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 10px;
+}
+
+.transaction-top h3 {
+  margin: 0;
+}
+
+.transaction-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.transaction-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.transaction-amount {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.transaction-actions button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 16px;
+}
+.transactions-container {
+  margin-top: 20px;
+
+  border: 1px solid #ddd;
+
+  border-radius: 12px;
+
+  padding: 0 20px;
+}
+
+.list-title {
+  margin-top: 30px;
+  margin-bottom: 15px;
+}
+.transaction-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.transaction-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.transaction-title-row h3 {
+  margin: 0;
+}
+
+.transaction-left p {
+  margin-top: 5px;
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+.transaction-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.income-icon {
+  font-size: 18px;
+}
+
+.transaction-right button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.transaction-right button:hover {
+  transform: scale(1.1);
+}
+
+.transaction-amount {
+  font-size: 18px;
+  font-weight: 600;
+}

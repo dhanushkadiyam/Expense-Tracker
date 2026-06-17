@@ -3,7 +3,13 @@ import api from "../services/api";
 import "./AddIncome.css";
 import { toast } from "react-toastify";
 
-function AddIncome({ incomes, setIncomes, selectedIncome, setSelectedIncome }) {
+function AddIncome({
+  incomes,
+  setIncomes,
+  selectedIncome,
+  setSelectedIncome,
+  setShowIncomeModal,
+}) {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
@@ -66,7 +72,9 @@ function AddIncome({ incomes, setIncomes, selectedIncome, setSelectedIncome }) {
       setAmount("");
       setCategory("");
       setDate("");
+
       setSelectedIncome(null);
+      setShowIncomeModal(false);
     } catch (error) {
       console.log(error.response?.data);
 
@@ -83,7 +91,7 @@ function AddIncome({ incomes, setIncomes, selectedIncome, setSelectedIncome }) {
   }, [selectedIncome]);
   return (
     <div className="form-container">
-      <h2>Add Income</h2>
+      <h2>{selectedIncome ? "Edit Income" : "Add Income"}</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Title</label>

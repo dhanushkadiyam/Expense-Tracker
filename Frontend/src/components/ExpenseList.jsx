@@ -4,7 +4,15 @@ import "./ListCard.css";
 import { toast } from "react-toastify";
 import DeleteModal from "./DeleteModal";
 import LoadingSpinner from "./LoadingSpinner";
-function ExpenseList({ expenses, setExpenses, setSelectedExpense }) {
+import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaArrowTrendDown } from "react-icons/fa6";
+
+function ExpenseList({
+  expenses,
+  setExpenses,
+  setSelectedExpense,
+  setShowExpenseModal,
+}) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [expenseToDelete, setExpenseToDelete] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -70,26 +78,49 @@ function ExpenseList({ expenses, setExpenses, setSelectedExpense }) {
         <p className="empty-state">No expense records found.</p>
       ) : (
         expenses.map((expense) => (
-          <div key={expense._id} className="list-card">
-            <h3>{expense.title}</h3>
+          <div key={expense._id} className="transaction-row">
+            <div className="transaction-main">
+              <div className="transaction-left">
+                <div className="transaction-title-row">
+                  <FaArrowTrendDown className="expense-icon" />
 
-            <p>Amount: ₹{expense.amount.toLocaleString()}</p>
-            <p>Category: {expense.category}</p>
+                  <h3>{expense.title}</h3>
+                </div>
 
-            <p>Date: {new Date(expense.date).toLocaleDateString()}</p>
-            <div className="card-buttons">
-              <button onClick={() => setSelectedExpense(expense)}>Edit</button>
-              <button
-                onClick={() => {
-                  setExpenseToDelete(expense._id);
-                  setShowDeleteModal(true);
-                }}
-              >
-                Delete
-              </button>
+                <p>
+                  {expense.category} •{" "}
+                  {new Date(expense.date).toLocaleDateString("en-GB", {
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric",
+                  })}
+                </p>
+              </div>
+
+              <div className="transaction-right">
+                <span className="transaction-amount">
+                  ₹{expense.amount.toLocaleString()}
+                </span>
+
+                <button
+                  onClick={() => {
+                    setSelectedExpense(expense);
+                    setShowExpenseModal(true);
+                  }}
+                >
+                  <FaEdit />
+                </button>
+
+                <button
+                  onClick={() => {
+                    setExpenseToDelete(expense._id);
+                    setShowDeleteModal(true);
+                  }}
+                >
+                  <FaTrash />
+                </button>
+              </div>
             </div>
-
-            <hr />
           </div>
         ))
       )}
