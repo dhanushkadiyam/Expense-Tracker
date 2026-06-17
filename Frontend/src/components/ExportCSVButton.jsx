@@ -1,3 +1,5 @@
+import { FaFileCsv } from "react-icons/fa";
+import "./ExportButton.css";
 function ExportCSVButton({ data, fileName }) {
   console.log(data);
   console.log(fileName);
@@ -44,8 +46,13 @@ function ExportCSVButton({ data, fileName }) {
     window.URL.revokeObjectURL(url);
   };
   return (
-    <button onClick={handleExport} disabled={!data.length}>
-      Export PDF
+    <button
+      className="export-btn"
+      onClick={handleExport}
+      disabled={!data.length}
+    >
+      <FaFileCsv />
+      CSV
     </button>
   );
 }

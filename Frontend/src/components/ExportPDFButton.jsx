@@ -1,5 +1,8 @@
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import "./ExportButton.css";
+import { FaFilePdf } from "react-icons/fa";
+
 function ExportPDFButton({ data, fileName }) {
   console.log(data);
   console.log(fileName);
@@ -36,8 +39,13 @@ function ExportPDFButton({ data, fileName }) {
     doc.save(`${fileName}.pdf`);
   };
   return (
-    <button onClick={handleExport} disabled={!data.length}>
-      Export PDF
+    <button
+      className="export-btn"
+      onClick={handleExport}
+      disabled={!data.length}
+    >
+      <FaFilePdf />
+      PDF
     </button>
   );
 }

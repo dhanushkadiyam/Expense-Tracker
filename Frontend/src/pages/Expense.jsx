@@ -4,6 +4,8 @@ import { useState } from "react";
 import MainLayout from "../components/Layout/MainLayout";
 import ExportCSVButton from "../components/ExportCSVButton";
 import ExportPDFButton from "../components/ExportPDFButton";
+import { FaList, FaEye } from "react-icons/fa";
+import { FaArrowTrendDown } from "react-icons/fa6";
 
 function Expense() {
   const [selectedExpense, setSelectedExpense] = useState(null);
@@ -44,19 +46,28 @@ function Expense() {
         </div>
         <div className="income-stats">
           <div className="income-stat-card">
-            <h4>Total Records</h4>
+            <h4>
+              <FaList />
+              Total Records
+            </h4>
             <h2>{expenses.length}</h2>
           </div>
 
           <div className="income-stat-card">
-            <h4>Showing</h4>
+            <h4>
+              <FaEye />
+              Showing
+            </h4>
             <h2>
               {filteredExpenses.length} of {expenses.length}
             </h2>
           </div>
 
           <div className="income-stat-card">
-            <h4>Total Expense</h4>
+            <h4>
+              <FaArrowTrendDown />
+              Total Expense
+            </h4>
             <h2>
               ₹
               {expenses

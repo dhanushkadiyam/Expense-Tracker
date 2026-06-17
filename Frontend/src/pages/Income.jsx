@@ -5,6 +5,7 @@ import MainLayout from "../components/Layout/MainLayout";
 import "./IncExpCommon.css";
 import ExportCSVButton from "../components/ExportCSVButton";
 import ExportPDFButton from "../components/ExportPDFButton";
+import { FaList, FaEye, FaMoneyBillWave } from "react-icons/fa";
 
 function Income() {
   const [incomes, setIncomes] = useState([]);
@@ -46,19 +47,25 @@ function Income() {
 
         <div className="income-stats">
           <div className="income-stat-card">
-            <h4>Total Records</h4>
+            <h4>
+              <FaList /> Total Records
+            </h4>
             <h2>{incomes.length}</h2>
           </div>
 
           <div className="income-stat-card">
-            <h4>Showing</h4>
+            <h4>
+              <FaEye /> Showing
+            </h4>
             <h2>
               {filteredIncomes.length} of {incomes.length}
             </h2>
           </div>
 
           <div className="income-stat-card">
-            <h4>Total Income</h4>
+            <h4>
+              <FaMoneyBillWave /> Total Income
+            </h4>
             <h2>
               ₹
               {incomes

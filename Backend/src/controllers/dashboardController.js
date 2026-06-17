@@ -58,17 +58,32 @@ export const getDashboardData = async (req, res) => {
       .sort({ createdAt: -1 })
       .limit(5);
 
+    const recentActivity = [
+      ...recentIncome.map((income) => ({
+        ...income.toObject(),
+        type: "income",
+      })),
+
+      ...recentExpenses.map((expense) => ({
+        ...expense.toObject(),
+        type: "expense",
+      })),
+    ]
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+      .slice(0, 10);
     res.status(200).json({
       totalIncome,
       totalExpense,
       balance,
-      
+
       monthlyIncome,
       monthlyExpense,
       monthlyNet,
 
       recentIncome,
       recentExpenses,
+
+      recentActivity,
 
       allIncome: incomes,
       allExpenses: expenses,

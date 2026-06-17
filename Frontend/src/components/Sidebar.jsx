@@ -4,10 +4,13 @@ import { MdDashboard } from "react-icons/md";
 import { HiArrowTrendingUp } from "react-icons/hi2";
 import { HiArrowTrendingDown } from "react-icons/hi2";
 import { FiLogOut } from "react-icons/fi";
+import ThemeSwitcher from "./ThemeSwitcher";
 
 function Sidebar() {
   const navigate = useNavigate();
   const location = useLocation();
+  const user = JSON.parse(localStorage.getItem("user"));
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -33,11 +36,24 @@ function Sidebar() {
           Expense
         </Link>
       </div>
+      <div className="sidebar-footer">
+        <ThemeSwitcher />
+        <div className="sidebar-profile">
+          <div className="profile-avatar">
+            {user?.name?.charAt(0)?.toUpperCase()}
+          </div>
 
-      <button className="logout-btn" onClick={handleLogout}>
-        <FiLogOut />
-        Logout
-      </button>
+          <div className="profile-info">
+            <h4>{user?.name}</h4>
+            <p>{user?.email}</p>
+          </div>
+        </div>
+
+        <button className="logout-btn" onClick={handleLogout}>
+          <FiLogOut />
+          Logout
+        </button>
+      </div>
     </div>
   );
 }

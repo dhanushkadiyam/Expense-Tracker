@@ -49,6 +49,8 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  width: 100%;
+  padding-left: 25%;
 }
 .stat-header {
   display: flex;
@@ -56,4 +58,61 @@
   align-items: center;
 
   margin-bottom: 15px;
+}
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  padding: 20px;
+}
+
+.sidebar-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.profile-avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-weight: bold;
+  font-size: 18px;
+
+  background: #6366f1;
+  color: white;
+}
+
+.profile-info h4 {
+  margin: 0;
+}
+
+.profile-info p {
+  margin: 2px 0 0;
+  font-size: 13px;
+  opacity: 0.7;
+}
+:root {
+  --bg-color: white;
+  --text-color: black;
+}
+
+body[data-theme="dark"] {
+  --bg-color: #0f172a;
+  --text-color: white;
+}
+
+body[data-theme="light"] {
+  --bg-color: white;
+  --text-color: black;
 }

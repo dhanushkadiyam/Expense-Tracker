@@ -45,6 +45,7 @@ function Dashboard() {
   if (loading) {
     return <LoadingSpinner text="Loading Dashboard..." />;
   }
+
   return (
     <MainLayout>
       <div>
@@ -111,31 +112,40 @@ function Dashboard() {
               />
             </div>
           </div>
-
-          <div className="recent-grid">
-            <div className="section-card">
-              <h2>Recent Expenses</h2>
-
-              {dashboardData?.recentExpenses?.map((expense) => (
-                <div key={expense._id} className="activity-row">
-                  <span>{expense.title}</span>
-
-                  <span>₹{expense.amount.toLocaleString()}</span>
-                </div>
-              ))}
+          <div className="activity-card">
+            <div className="activity-header">
+              <h2>Recent Activity</h2>
+              <span>{dashboardData?.recentActivity?.length || 0} Records</span>
             </div>
 
-            <div className="section-card">
-              <h2>Recent Income</h2>
+            {dashboardData?.recentActivity?.map((item) => (
+              <div
+                key={item._id}
+                className="activity-row"
+                onClick={() =>
+                  navigate(item.type === "income" ? "/income" : "/expense")
+                }
+              >
+                <div className="activity-left">
+                  <h4>
+                    {item.type === "income" ? "💰" : "📉"} {item.title}
+                  </h4>
 
-              {dashboardData?.recentIncome?.map((income) => (
-                <div key={income._id} className="activity-row">
-                  <span>{income.title}</span>
-
-                  <span>₹{income.amount.toLocaleString()}</span>
+                  <p>
+                    {item.category} •{" "}
+                    {new Date(item.date).toLocaleDateString("en-GB", {
+                      day: "numeric",
+                      month: "short",
+                      year: "numeric",
+                    })}
+                  </p>
                 </div>
-              ))}
-            </div>
+
+                <span className="activity-amount">
+                  ₹{item.amount.toLocaleString()}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
       </div>

@@ -4,10 +4,13 @@ import "./index.css";
 import App from "./App.jsx";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import { ThemeProvider } from "./context/ThemeContext";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <App />
-    <ToastContainer />
+    <ThemeProvider>
+      <App />
+      <ToastContainer />
+    </ThemeProvider>
   </StrictMode>,
 );
