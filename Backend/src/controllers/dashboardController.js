@@ -8,6 +8,34 @@ export const getDashboardData = async (req, res) => {
     const incomes = await Income.find({ userId });
     const expenses = await Expense.find({ userId });
 
+    const currentMonth = new Date().getMonth();
+    const currentYear = new Date().getFullYear();
+
+    let monthlyIncome = 0;
+
+    for (const income of incomes) {
+      const incomeDate = new Date(income.date);
+
+      if (
+        incomeDate.getMonth() === currentMonth &&
+        incomeDate.getFullYear() === currentYear
+      ) {
+        monthlyIncome += income.amount;
+      }
+    }
+    let monthlyExpense = 0;
+
+    for (const expense of expenses) {
+      const expenseDate = new Date(expense.date);
+
+      if (
+        expenseDate.getMonth() === currentMonth &&
+        expenseDate.getFullYear() === currentYear
+      ) {
+        monthlyExpense += expense.amount;
+      }
+    }
+    const monthlyNet = monthlyIncome - monthlyExpense;
     let totalIncome = 0;
 
     for (const income of incomes) {
@@ -34,8 +62,14 @@ export const getDashboardData = async (req, res) => {
       totalIncome,
       totalExpense,
       balance,
+      
+      monthlyIncome,
+      monthlyExpense,
+      monthlyNet,
+
       recentIncome,
       recentExpenses,
+
       allIncome: incomes,
       allExpenses: expenses,
     });

@@ -6,10 +6,18 @@ import "./Dashboard.css";
 import PieChartComponent from "../components/Charts/PieChartComponent";
 import BarChartComponent from "../components/BarChartComponent";
 import LoadingSpinner from "../components/LoadingSpinner";
+import { useNavigate } from "react-router-dom";
+
+import { HiArrowTrendingUp } from "react-icons/hi2";
+import { HiArrowTrendingDown } from "react-icons/hi2";
+import { FaWallet } from "react-icons/fa";
+import { BsGraphUpArrow } from "react-icons/bs";
 
 function Dashboard() {
   const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
     const fetchDashboardData = async () => {
@@ -40,29 +48,55 @@ function Dashboard() {
   return (
     <MainLayout>
       <div>
-        <h1>Expense Tracker Dashboard</h1>
         <div>
-          <div className="cards-container">
+          <div className="dashboard-header">
+            <div>
+              <h1>Hi, {user?.name} 👋</h1>{" "}
+              <p>Here's your financial overview.</p>
+            </div>
+
+            <div className="dashboard-actions">
+              <button onClick={() => navigate("/income")}>+ Add Income</button>
+
+              <button onClick={() => navigate("/expense")}>
+                + Add Expense
+              </button>
+            </div>
+          </div>
+          <div className="stats-grid">
             <StatCard
               title="Total Income"
               value={`₹${dashboardData?.totalIncome?.toLocaleString()}`}
+              icon={<HiArrowTrendingUp />}
             />
 
             <StatCard
               title="Total Expense"
               value={`₹${dashboardData?.totalExpense?.toLocaleString()}`}
+              icon={<HiArrowTrendingDown />}
             />
 
             <StatCard
               title="Balance"
               value={`₹${dashboardData?.balance?.toLocaleString()}`}
+              icon={<FaWallet />}
+            />
+
+            <StatCard
+              title="This Month Net"
+              value={`₹${dashboardData?.monthlyNet?.toLocaleString()}`}
+              icon={<BsGraphUpArrow />}
             />
           </div>
-          <div className="charts-container">
+
+          <div className="bar-chart-section">
             <BarChartComponent
               income={dashboardData?.allIncome}
               expenses={dashboardData?.allExpenses}
             />
+          </div>
+
+          <div className="pie-grid">
             <div className="chart-box">
               <PieChartComponent
                 title="Expense Distribution"
@@ -77,24 +111,31 @@ function Dashboard() {
               />
             </div>
           </div>
-          <div className="section-card">
-            <h2>Recent Expenses</h2>
 
-            {dashboardData?.recentExpenses?.map((expense) => (
-              <div key={expense._id} className="section-item">
-                {expense.title} - ₹{expense.amount.toLocaleString()}
-              </div>
-            ))}
-          </div>
+          <div className="recent-grid">
+            <div className="section-card">
+              <h2>Recent Expenses</h2>
 
-          <div className="section-card">
-            <h2>Recent Income</h2>
+              {dashboardData?.recentExpenses?.map((expense) => (
+                <div key={expense._id} className="activity-row">
+                  <span>{expense.title}</span>
 
-            {dashboardData?.recentIncome?.map((income) => (
-              <div key={income._id} className="section-item">
-                {income.title} - ₹{income.amount.toLocaleString()}
-              </div>
-            ))}
+                  <span>₹{expense.amount.toLocaleString()}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="section-card">
+              <h2>Recent Income</h2>
+
+              {dashboardData?.recentIncome?.map((income) => (
+                <div key={income._id} className="activity-row">
+                  <span>{income.title}</span>
+
+                  <span>₹{income.amount.toLocaleString()}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

@@ -1,10 +1,10 @@
-import Navbar from "../Navbar";
+import Sidebar from "../Sidebar";
 import "./MainLayout.css";
 
 function MainLayout({ children }) {
   return (
-    <div>
-      <Navbar />
+    <div className="layout">
+      <Sidebar />
 
       <div className="page-container">{children}</div>
     </div>
