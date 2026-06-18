@@ -130,3 +130,25 @@
 .activity-row:hover {
   background: #f5f5f5;
 }
+.empty-dashboard {
+  margin-top: 30px;
+  padding: 80px 30px;
+  text-align: center;
+  border-radius: 16px;
+  border: 1px dashed #555;
+}
+
+.empty-dashboard h2 {
+  margin-bottom: 10px;
+}
+
+.empty-dashboard p {
+  margin-bottom: 20px;
+  color: #888;
+}
+
+.empty-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}

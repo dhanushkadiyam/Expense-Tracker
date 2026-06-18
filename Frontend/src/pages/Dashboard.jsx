@@ -45,7 +45,8 @@ function Dashboard() {
   if (loading) {
     return <LoadingSpinner text="Loading Dashboard..." />;
   }
-
+  const hasData =
+    dashboardData?.totalIncome > 0 || dashboardData?.totalExpense > 0;
   return (
     <MainLayout>
       <div>
@@ -90,63 +91,90 @@ function Dashboard() {
             />
           </div>
 
-          <div className="bar-chart-section">
-            <BarChartComponent
-              income={dashboardData?.allIncome}
-              expenses={dashboardData?.allExpenses}
-            />
-          </div>
+          {!hasData ? (
+            <div className="empty-dashboard">
+              <h2>Welcome to Expense Tracker 👋</h2>
 
-          <div className="pie-grid">
-            <div className="chart-box">
-              <PieChartComponent
-                title="Expense Distribution"
-                items={dashboardData?.allExpenses}
-              />
+              <p>
+                Start tracking your finances by adding your first income or
+                expense.
+              </p>
+
+              <div className="empty-actions">
+                <button onClick={() => navigate("/income")}>
+                  + Add Income
+                </button>
+
+                <button onClick={() => navigate("/expense")}>
+                  + Add Expense
+                </button>
+              </div>
             </div>
+          ) : (
+            <>
+              <div className="bar-chart-section">
+                <BarChartComponent
+                  income={dashboardData?.allIncome}
+                  expenses={dashboardData?.allExpenses}
+                />
+              </div>
 
-            <div className="chart-box">
-              <PieChartComponent
-                title="Income Distribution"
-                items={dashboardData?.allIncome}
-              />
-            </div>
-          </div>
-          <div className="activity-card">
-            <div className="activity-header">
-              <h2>Recent Activity</h2>
-              <span>{dashboardData?.recentActivity?.length || 0} Records</span>
-            </div>
-
-            {dashboardData?.recentActivity?.map((item) => (
-              <div
-                key={item._id}
-                className="activity-row"
-                onClick={() =>
-                  navigate(item.type === "income" ? "/income" : "/expense")
-                }
-              >
-                <div className="activity-left">
-                  <h4>
-                    {item.type === "income" ? "💰" : "📉"} {item.title}
-                  </h4>
-
-                  <p>
-                    {item.category} •{" "}
-                    {new Date(item.date).toLocaleDateString("en-GB", {
-                      day: "numeric",
-                      month: "short",
-                      year: "numeric",
-                    })}
-                  </p>
+              <div className="pie-grid">
+                <div className="chart-box">
+                  <PieChartComponent
+                    title="Expense Distribution"
+                    items={dashboardData?.allExpenses}
+                  />
                 </div>
 
-                <span className="activity-amount">
-                  ₹{item.amount.toLocaleString()}
-                </span>
+                <div className="chart-box">
+                  <PieChartComponent
+                    title="Income Distribution"
+                    items={dashboardData?.allIncome}
+                  />
+                </div>
               </div>
-            ))}
-          </div>
+
+              <div className="activity-card">
+                <div className="activity-header">
+                  <h2>Recent Activity</h2>
+
+                  <span>
+                    {dashboardData?.recentActivity?.length || 0} Records
+                  </span>
+                </div>
+
+                {dashboardData?.recentActivity?.map((item) => (
+                  <div
+                    key={item._id}
+                    className="activity-row"
+                    onClick={() =>
+                      navigate(item.type === "income" ? "/income" : "/expense")
+                    }
+                  >
+                    <div className="activity-left">
+                      <h4>
+                        {item.type === "income" ? "💰" : "📉"} {item.title}
+                      </h4>
+
+                      <p>
+                        {item.category} •{" "}
+                        {new Date(item.date).toLocaleDateString("en-GB", {
+                          day: "numeric",
+                          month: "short",
+                          year: "numeric",
+                        })}
+                      </p>
+                    </div>
+
+                    <span className="activity-amount">
+                      ₹{item.amount.toLocaleString()}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
         </div>
       </div>
     </MainLayout>

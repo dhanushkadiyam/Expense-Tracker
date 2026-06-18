@@ -5,6 +5,7 @@ import { HiArrowTrendingUp } from "react-icons/hi2";
 import { HiArrowTrendingDown } from "react-icons/hi2";
 import { FiLogOut } from "react-icons/fi";
 import ThemeSwitcher from "./ThemeSwitcher";
+import { FaCog } from "react-icons/fa";
 
 function Sidebar() {
   const navigate = useNavigate();
@@ -34,6 +35,10 @@ function Sidebar() {
         <Link to="/expense">
           <HiArrowTrendingDown />
           Expense
+        </Link>
+        <Link to="/settings">
+          <FaCog />
+          <span>Settings</span>
         </Link>
       </div>
       <div className="sidebar-footer">

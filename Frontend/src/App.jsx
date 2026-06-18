@@ -5,7 +5,7 @@ import Dashboard from "./pages/Dashboard";
 import Expense from "./pages/Expense";
 import Income from "./pages/Income";
 import ProtectedRoute from "./components/ProtectedRoute";
-
+import Settings from "./pages/Settings";
 function App() {
   return (
     <BrowserRouter>
@@ -33,6 +33,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Expense />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/settings"
+          element={
+            <ProtectedRoute>
+              <Settings />
             </ProtectedRoute>
           }
         />

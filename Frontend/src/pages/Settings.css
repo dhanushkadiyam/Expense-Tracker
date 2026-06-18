@@ -1,0 +1,34 @@
+.settings-page {
+  padding: 20px;
+}
+
+.settings-grid {
+  display: grid;
+  gap: 20px;
+
+  margin-top: 20px;
+}
+
+.settings-card {
+  border: 1px solid #ddd;
+
+  border-radius: 12px;
+
+  padding: 20px;
+}
+
+.settings-card h3 {
+  margin-bottom: 10px;
+}
+
+.settings-card p {
+  margin-bottom: 15px;
+}
+
+.settings-card button {
+  cursor: pointer;
+}
+
+.danger-card {
+  border-color: red;
+}
