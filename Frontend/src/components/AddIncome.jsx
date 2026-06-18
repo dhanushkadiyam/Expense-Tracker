@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
-import "./AddIncome.css";
+import "./TransactionForm.css";
 import { toast } from "react-toastify";
 
 function AddIncome({
@@ -91,11 +91,9 @@ function AddIncome({
   }, [selectedIncome]);
   return (
     <div className="form-container">
-      <h2>{selectedIncome ? "Edit Income" : "Add Income"}</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Title</label>
-          <br />
           <input
             type="text"
             value={title}
@@ -103,11 +101,8 @@ function AddIncome({
           />
         </div>
 
-        <br />
-
         <div className="form-group">
           <label>Amount</label>
-          <br />
           <input
             type="number"
             value={amount}
@@ -115,11 +110,8 @@ function AddIncome({
           />
         </div>
 
-        <br />
-
         <div className="form-group">
           <label>Category</label>
-          <br />
           <input
             type="text"
             value={category}
@@ -127,19 +119,14 @@ function AddIncome({
           />
         </div>
 
-        <br />
-
         <div className="form-group">
           <label>Date</label>
-          <br />
           <input
             type="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
           />
         </div>
-
-        <br />
 
         <button className="submit-btn" type="submit">
           {selectedIncome ? "Update Income" : "Add Income"}

@@ -8,6 +8,7 @@ function ThemeSwitcher() {
   return (
     <div className="theme-switcher">
       <button
+        title="Light Mode"
         className={theme === "light" ? "active" : ""}
         onClick={() => setTheme("light")}
       >
@@ -15,6 +16,7 @@ function ThemeSwitcher() {
       </button>
 
       <button
+        title="Dark Mode"
         className={theme === "dark" ? "active" : ""}
         onClick={() => setTheme("dark")}
       >
@@ -22,6 +24,7 @@ function ThemeSwitcher() {
       </button>
 
       <button
+        title="System Theme"
         className={theme === "system" ? "active" : ""}
         onClick={() => setTheme("system")}
       >

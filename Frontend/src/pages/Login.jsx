@@ -37,12 +37,10 @@ function Login() {
   return (
     <div className="auth-container">
       <div className="auth-card">
-        <h1 className="auth-title">Login</h1>
-
+        <h1 className="auth-title">Welcome Back 👋</h1>
         <form onSubmit={handleSubmit}>
           <div className="auth-form-group">
             <label>Email</label>
-            <br />
             <input
               className="auth-input"
               type="email"
@@ -52,11 +50,8 @@ function Login() {
             />
           </div>
 
-          <br />
-
           <div className="auth-form-group">
             <label>Password</label>
-            <br />
             <input
               className="auth-input"
               type="password"
@@ -65,7 +60,6 @@ function Login() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <br />
           <button type="submit" className="auth-button" disabled={loading}>
             {loading ? "Logging in..." : "Login"}
           </button>

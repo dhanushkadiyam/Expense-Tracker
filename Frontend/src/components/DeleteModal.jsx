@@ -11,8 +11,7 @@ function DeleteModal({ isOpen, title, message, onCancel, onConfirm }) {
 
         <div className="delete-modal-buttons">
           <button onClick={onCancel}>Cancel</button>
-
-          <button onClick={onConfirm}>Delete</button>
+          <button onClick={onConfirm}>Delete Permanently</button>{" "}
         </div>
       </div>
     </div>

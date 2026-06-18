@@ -1,13 +1,17 @@
 import "./StatCard.css";
+
 function StatCard({ title, value, icon }) {
   return (
     <div className="stat-card">
       <div className="stat-header">
-        <h3>{title}</h3>
-        {icon}
+        <h4>{title}</h4>
+
+        <div className="stat-icon">{icon}</div>
       </div>
 
       <h2>{value}</h2>
+
+      <p className="stat-subtitle">Financial Summary</p>
     </div>
   );
 }

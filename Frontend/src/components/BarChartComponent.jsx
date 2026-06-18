@@ -1,3 +1,5 @@
+import "./BarChartComponent.css";
+import { useTheme } from "../context/useTheme";
 import {
   BarChart,
   Bar,
@@ -24,6 +26,9 @@ function BarChartComponent({ income, expenses }) {
     "Nov",
     "Dec",
   ];
+  const { theme } = useTheme();
+
+  const isDark = theme === "dark";
   const chartData = months.map((month) => ({
     month,
     income: 0,
@@ -47,22 +52,33 @@ function BarChartComponent({ income, expenses }) {
       <div className="chart-container">
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={chartData}>
-            <XAxis dataKey="month" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
+            <XAxis dataKey="month" stroke={isDark ? "#94a3b8" : "#64748b"} />
+
+            <YAxis stroke={isDark ? "#94a3b8" : "#64748b"} />
+            <Tooltip
+              contentStyle={{
+                backgroundColor: isDark ? "#1e293b" : "#ffffff",
+                border: "1px solid #334155",
+                borderRadius: "10px",
+              }}
+            />
+            <Legend
+              wrapperStyle={{
+                color: isDark ? "#f8fafc" : "#0f172a",
+              }}
+            />
 
             <Bar
               dataKey="income"
               name="Income"
-              fill="#00C49F"
+              fill="#22c55e"
               radius={[5, 5, 0, 0]}
             />
 
             <Bar
               dataKey="expense"
               name="Expense"
-              fill="#FF8042"
+              fill="#ef4444"
               radius={[5, 5, 0, 0]}
             />
           </BarChart>

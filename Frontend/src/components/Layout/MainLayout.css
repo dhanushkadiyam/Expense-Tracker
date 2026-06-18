@@ -5,13 +5,19 @@
 .page-container {
   flex: 1;
 
-  margin-left: 250px;
+  margin-left: 220px;
 
-  padding: 25px;
+  padding: 20px;
 
   min-height: 100vh;
 
   box-sizing: border-box;
 
-  background-color: #f5f7fb;
+  background: var(--bg-color);
+
+  color: var(--text-primary);
+
+  transition:
+    background 0.3s ease,
+    color 0.3s ease;
 }

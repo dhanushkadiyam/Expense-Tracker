@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import MainLayout from "../components/Layout/MainLayout";
 import { useTheme } from "../context/useTheme";
 import { useNavigate } from "react-router-dom";
+import "./Settings.css";
 
 function Settings() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -124,45 +125,45 @@ function Settings() {
     <MainLayout>
       <div className="settings-page">
         <h1>Settings</h1>
+        <div className="settings-grid">
+          <div className="settings-card">
+            <h3>👤 Profile</h3>
 
-        <div className="settings-card">
-          <h3>👤 Profile</h3>
+            <p>Update your name and email</p>
 
-          <p>Update your name and email</p>
+            <button onClick={() => setShowProfileModal(true)}>
+              Edit Profile
+            </button>
+          </div>
 
-          <button onClick={() => setShowProfileModal(true)}>
-            Edit Profile
-          </button>
+          <div className="settings-card">
+            <h3>🔒 Change Password</h3>
+
+            <p>Update your account password</p>
+
+            <button onClick={() => setShowPasswordModal(true)}>
+              Change Password
+            </button>
+          </div>
+
+          <div className="settings-card">
+            <h3>🎨 Theme</h3>
+
+            <p>Current Theme: {theme}</p>
+
+            <p>Theme controls are available in the sidebar.</p>
+          </div>
+
+          <div className="settings-card danger-card">
+            <h3>⚠ Delete Account</h3>
+
+            <p>Permanently delete your account and all data.</p>
+
+            <button onClick={() => setShowDeleteModal(true)}>
+              Delete Account
+            </button>
+          </div>
         </div>
-
-        <div className="settings-card">
-          <h3>🔒 Change Password</h3>
-
-          <p>Update your account password</p>
-
-          <button onClick={() => setShowPasswordModal(true)}>
-            Change Password
-          </button>
-        </div>
-
-        <div className="settings-card">
-          <h3>🎨 Theme</h3>
-
-          <p>Current Theme: {theme}</p>
-
-          <p>Theme controls are available in the sidebar.</p>
-        </div>
-
-        <div className="settings-card danger-card">
-          <h3>⚠ Delete Account</h3>
-
-          <p>Permanently delete your account and all data.</p>
-
-          <button onClick={() => setShowDeleteModal(true)}>
-            Delete Account
-          </button>
-        </div>
-
         {showPasswordModal && (
           <div className="modal-overlay">
             <div className="modal-content">
@@ -171,37 +172,30 @@ function Settings() {
 
                 <button onClick={() => setShowPasswordModal(false)}>✕</button>
               </div>
-
-              <input
-                type="password"
-                placeholder="Current Password"
-                value={currentPassword}
-                onChange={(e) => setCurrentPassword(e.target.value)}
-              />
-
-              <br />
-              <br />
-
-              <input
-                type="password"
-                placeholder="New Password"
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-              />
-
-              <br />
-              <br />
-
-              <input
-                type="password"
-                placeholder="Confirm Password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
-
-              <br />
-              <br />
-
+              <div className="form-field">
+                <input
+                  type="password"
+                  placeholder="Current Password"
+                  value={currentPassword}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
+                />
+              </div>
+              <div className="form-field">
+                <input
+                  type="password"
+                  placeholder="New Password"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                />
+              </div>
+              <div className="form-field">
+                <input
+                  type="password"
+                  placeholder="Confirm Password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+              </div>
               <button onClick={handleChangePassword}>Update Password</button>
             </div>
           </div>
@@ -214,29 +208,24 @@ function Settings() {
 
                 <button onClick={() => setShowProfileModal(false)}>✕</button>
               </div>
+              <div className="form-field">
+                <label>Name</label>
 
-              <label>Name</label>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </div>
+              <div className="form-field">
+                <label>Email</label>
 
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-
-              <br />
-              <br />
-
-              <label>Email</label>
-
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-
-              <br />
-              <br />
-
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
               <button onClick={handleUpdate}>Save Changes</button>
             </div>
           </div>
@@ -254,17 +243,14 @@ function Settings() {
             <p>
               Type <strong>DELETE</strong> to confirm account deletion.
             </p>
-
-            <input
-              type="text"
-              value={deleteText}
-              onChange={(e) => setDeleteText(e.target.value)}
-              placeholder="Type DELETE"
-            />
-
-            <br />
-            <br />
-
+            <div className="form-field">
+              <input
+                type="text"
+                value={deleteText}
+                onChange={(e) => setDeleteText(e.target.value)}
+                placeholder="Type DELETE"
+              />
+            </div>
             <button className="danger-btn" onClick={handleDeleteAccount}>
               Confirm Delete
             </button>

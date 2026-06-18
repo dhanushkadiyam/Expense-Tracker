@@ -1,21 +1,52 @@
 .theme-switcher {
   display: flex;
+
+  justify-content: center;
+
   gap: 10px;
 
   margin-bottom: 20px;
+
+  padding: 6px;
+
+  background: var(--hover-bg);
+
+  border-radius: 12px;
 }
 
 .theme-switcher button {
+  width: 42px;
+  height: 42px;
+
   border: none;
+
+  border-radius: 10px;
 
   cursor: pointer;
 
-  width: 40px;
-  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-  border-radius: 8px;
+  font-size: 16px;
+
+  background: transparent;
+
+  color: var(--text-secondary);
+
+  transition: all 0.2s ease;
+}
+
+.theme-switcher button:hover {
+  background: var(--card-bg);
+
+  color: var(--text-primary);
 }
 
 .theme-switcher .active {
-  font-weight: bold;
+  background: var(--primary-color);
+
+  color: white;
+
+  box-shadow: var(--shadow);
 }

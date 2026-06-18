@@ -6,8 +6,17 @@ export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "system");
 
   useEffect(() => {
+    let appliedTheme = theme;
+
+    if (theme === "system") {
+      appliedTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
+    }
+
+    document.body.setAttribute("data-theme", appliedTheme);
+
     localStorage.setItem("theme", theme);
-    document.body.setAttribute("data-theme", theme);
   }, [theme]);
 
   return (
