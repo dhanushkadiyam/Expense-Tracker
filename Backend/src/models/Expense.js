@@ -28,6 +28,18 @@ const expenseSchema = new mongoose.Schema(
         date: {
             type: Date,
             required: true
+        },
+
+        paymentMethod: {
+            type: String,
+            default: "Cash",
+            trim: true
+        },
+
+        notes: {
+            type: String,
+            default: "",
+            trim: true
         }
     },
     {

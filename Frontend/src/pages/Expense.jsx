@@ -117,6 +117,7 @@ function Expense() {
               </div>
 
               <AddExpense
+                key={selectedExpense?._id || "new"}
                 expenses={expenses}
                 setExpenses={setExpenses}
                 selectedExpense={selectedExpense}

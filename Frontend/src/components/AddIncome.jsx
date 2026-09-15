@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import api from "../services/api";
 import "./TransactionForm.css";
 import { toast } from "react-toastify";
@@ -10,10 +10,12 @@ function AddIncome({
   setSelectedIncome,
   setShowIncomeModal,
 }) {
-  const [title, setTitle] = useState("");
-  const [amount, setAmount] = useState("");
-  const [category, setCategory] = useState("");
-  const [date, setDate] = useState("");
+  const [title, setTitle] = useState(selectedIncome?.title || "");
+  const [amount, setAmount] = useState(selectedIncome?.amount || "");
+  const [category, setCategory] = useState(selectedIncome?.category || "");
+  const [date, setDate] = useState(
+    selectedIncome?.date ? selectedIncome.date.split("T")[0] : "",
+  );
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -81,14 +83,6 @@ function AddIncome({
       toast.error("Failed to save income");
     }
   };
-  useEffect(() => {
-    if (selectedIncome) {
-      setTitle(selectedIncome.title);
-      setAmount(selectedIncome.amount);
-      setCategory(selectedIncome.category);
-      setDate(selectedIncome.date.split("T")[0]);
-    }
-  }, [selectedIncome]);
   return (
     <div className="form-container">
       <form onSubmit={handleSubmit}>

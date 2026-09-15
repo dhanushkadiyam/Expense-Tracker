@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import api from "../services/api";
 import "./TransactionForm.css";
 import { toast } from "react-toastify";
@@ -10,10 +10,12 @@ function AddExpense({
   setSelectedExpense,
   setShowExpenseModal,
 }) {
-  const [title, setTitle] = useState("");
-  const [amount, setAmount] = useState("");
-  const [category, setCategory] = useState("");
-  const [date, setDate] = useState("");
+  const [title, setTitle] = useState(selectedExpense?.title || "");
+  const [amount, setAmount] = useState(selectedExpense?.amount || "");
+  const [category, setCategory] = useState(selectedExpense?.category || "");
+  const [date, setDate] = useState(
+    selectedExpense?.date ? selectedExpense.date.split("T")[0] : "",
+  );
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -81,16 +83,6 @@ function AddExpense({
       toast.error("Failed to save expense");
     }
   };
-
-  useEffect(() => {
-    if (selectedExpense) {
-      console.log(selectedExpense);
-      setTitle(selectedExpense.title);
-      setAmount(selectedExpense.amount);
-      setCategory(selectedExpense.category);
-      setDate(selectedExpense.date.split("T")[0]);
-    }
-  }, [selectedExpense]);
 
   return (
     <div className="form-container">

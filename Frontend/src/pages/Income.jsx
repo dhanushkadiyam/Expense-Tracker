@@ -114,6 +114,7 @@ function Income() {
               </div>
 
               <AddIncome
+                key={selectedIncome?._id || "new"}
                 incomes={incomes}
                 setIncomes={setIncomes}
                 selectedIncome={selectedIncome}
