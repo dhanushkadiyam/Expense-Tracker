@@ -4,8 +4,6 @@ import "./ExportButton.css";
 import { FaFilePdf } from "react-icons/fa";
 
 function ExportPDFButton({ data, fileName }) {
-  console.log(data);
-  console.log(fileName);
   const handleExport = () => {
     const doc = new jsPDF();
 
@@ -24,12 +22,14 @@ function ExportPDFButton({ data, fileName }) {
       item.title,
       item.amount,
       item.category,
+      item.paymentMethod || "Cash",
+      item.notes || "",
       new Date(item.date).toLocaleDateString("en-GB").replace(/\//g, "-"),
     ]);
     const total = data.reduce((sum, item) => sum + item.amount, 0);
     autoTable(doc, {
       startY: 40,
-      head: [["Title", "Amount", "Category", "Date"]],
+      head: [["Title", "Amount", "Category", "Payment", "Notes", "Date"]],
       body: tableData,
       theme: "striped",
     });

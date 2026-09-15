@@ -1,12 +1,17 @@
 import { FaFileCsv } from "react-icons/fa";
 import "./ExportButton.css";
 function ExportCSVButton({ data, fileName }) {
-  console.log(data);
-  console.log(fileName);
   const handleExport = () => {
     if (!data.length) return;
 
-    const headers = ["title", "amount", "category", "date"];
+    const headers = [
+      "title",
+      "amount",
+      "category",
+      "paymentMethod",
+      "notes",
+      "date",
+    ];
 
     const csvRows = [
       headers.join(","),
@@ -19,7 +24,7 @@ function ExportCSVButton({ data, fileName }) {
                 .replace(/\//g, "-")}"`;
             }
 
-            return item[header];
+            return `"${String(item[header] || "").replace(/"/g, '""')}"`;
           })
           .join(","),
       ),

@@ -11,6 +11,7 @@ function Settings() {
 
   const [name, setName] = useState(user?.name || "");
   const [email, setEmail] = useState(user?.email || "");
+  const [monthlyBudget, setMonthlyBudget] = useState(user?.monthlyBudget || "");
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [showPasswordModal, setShowPasswordModal] = useState(false);
 
@@ -121,6 +122,22 @@ function Settings() {
       toast.error("Failed to update profile");
     }
   };
+
+  const handleBudgetUpdate = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await api.put(
+        "/users/budget",
+        { monthlyBudget },
+        { headers: { Authorization: `Bearer ${token}` } },
+      );
+
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+      toast.success("Monthly budget updated successfully");
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Failed to update budget");
+    }
+  };
   return (
     <MainLayout>
       <div className="settings-page">
@@ -152,6 +169,23 @@ function Settings() {
             <p>Current Theme: {theme}</p>
 
             <p>Theme controls are available in the sidebar.</p>
+          </div>
+
+          <div className="settings-card">
+            <h3>📊 Monthly Budget</h3>
+            <p>Set a spending limit for the current month.</p>
+            <div className="form-field">
+              <label htmlFor="monthly-budget">Budget amount</label>
+              <input
+                id="monthly-budget"
+                type="number"
+                min="0"
+                value={monthlyBudget}
+                onChange={(e) => setMonthlyBudget(e.target.value)}
+                placeholder="0"
+              />
+            </div>
+            <button onClick={handleBudgetUpdate}>Save Budget</button>
           </div>
 
           <div className="settings-card danger-card">

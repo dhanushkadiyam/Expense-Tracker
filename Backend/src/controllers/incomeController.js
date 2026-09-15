@@ -2,7 +2,7 @@ import Income from "../models/Income.js";
 
 export const addIncome = async (req, res) => {
   try {
-    const { title, amount, category, date } = req.body;
+    const { title, amount, category, date, paymentMethod, notes } = req.body;
 
     const userId = req.user.userId;
 
@@ -18,6 +18,8 @@ export const addIncome = async (req, res) => {
       amount,
       category,
       date,
+      paymentMethod,
+      notes,
     });
 
     res.status(201).json({
@@ -79,7 +81,7 @@ export const updateIncome = async (req, res) => {
   try {
     const incomeId = req.params.id;
 
-    const { title, amount, category, date } = req.body;
+    const { title, amount, category, date, paymentMethod, notes } = req.body;
 
     const income = await Income.findById(incomeId);
 
@@ -99,6 +101,8 @@ export const updateIncome = async (req, res) => {
     income.amount = amount;
     income.category = category;
     income.date = date;
+    income.paymentMethod = paymentMethod;
+    income.notes = notes;
 
     await income.save();
 

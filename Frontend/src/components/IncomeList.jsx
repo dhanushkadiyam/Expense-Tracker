@@ -88,7 +88,7 @@ function IncomeList({
                   </div>
 
                   <p>
-                    {income.category} •{" "}
+                    {income.category} • {income.paymentMethod || "Cash"} •{" "}
                     {new Date(income.date).toLocaleDateString("en-GB", {
                       day: "numeric",
                       month: "short",

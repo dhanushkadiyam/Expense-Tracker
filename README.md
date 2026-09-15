@@ -8,6 +8,11 @@ A full-stack personal finance application for tracking income and expenses, view
 - Protected income and expense management
 - Add, edit, search, filter, and delete transactions
 - Dashboard summaries with income, expenses, balance, and charts
+- Monthly budget tracking with near-limit and over-limit alerts
+- Monthly savings-rate KPI
+- Payment method tagging and category presets
+- Date, amount, payment method, and sorting filters
+- One-click demo data generation with duplicate protection
 - CSV and PDF transaction exports
 - Light, dark, and system theme modes
 - Profile updates, password changes, and account deletion
@@ -52,6 +57,16 @@ JWT_SECRET=replace_with_a_long_random_secret
 ```
 
 `MONGO_URI` is optional. If the configured MongoDB server is unavailable, the backend starts `mongodb-memory-server` automatically for the current process.
+
+### Frontend environment
+
+To point the frontend at a deployed API, create `Frontend/.env`:
+
+```env
+VITE_API_URL=https://your-api.example.com/api
+```
+
+If omitted, the frontend uses `http://localhost:5000/api` for local development.
 
 ## Run Locally
 
@@ -99,13 +114,14 @@ npm start
 
 All transaction, dashboard, and user-management routes require a bearer token unless stated otherwise.
 
-| Area           | Routes                                                                                         |
-| -------------- | ---------------------------------------------------------------------------------------------- |
-| Authentication | `POST /api/auth/register`, `POST /api/auth/login`, `GET /api/auth/profile`                     |
-| Expenses       | `GET/POST /api/expenses`, `PUT/DELETE /api/expenses/:id`                                       |
-| Income         | `GET/POST /api/income`, `PUT/DELETE /api/income/:id`                                           |
-| Dashboard      | `GET /api/dashboard`                                                                           |
-| User settings  | `PUT /api/users/profile`, `PUT /api/users/change-password`, `DELETE /api/users/delete-account` |
+| Area           | Routes                                                                                                                  |
+| -------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| Authentication | `POST /api/auth/register`, `POST /api/auth/login`, `GET /api/auth/profile`                                              |
+| Expenses       | `GET/POST /api/expenses`, `PUT/DELETE /api/expenses/:id`                                                                |
+| Income         | `GET/POST /api/income`, `PUT/DELETE /api/income/:id`                                                                    |
+| Dashboard      | `GET /api/dashboard`                                                                                                    |
+| User settings  | `PUT /api/users/profile`, `PUT /api/users/budget`, `PUT /api/users/change-password`, `DELETE /api/users/delete-account` |
+| Demo data      | `POST /api/demo-data`                                                                                                   |
 
 ## Security Notes
 

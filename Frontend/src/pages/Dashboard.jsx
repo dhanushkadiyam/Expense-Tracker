@@ -12,10 +12,12 @@ import { HiArrowTrendingUp } from "react-icons/hi2";
 import { HiArrowTrendingDown } from "react-icons/hi2";
 import { FaWallet } from "react-icons/fa";
 import { BsGraphUpArrow } from "react-icons/bs";
+import { FaChartLine } from "react-icons/fa";
 
 function Dashboard() {
   const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [generatingDemo, setGeneratingDemo] = useState(false);
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -42,6 +44,22 @@ function Dashboard() {
 
     fetchDashboardData();
   }, []);
+
+  const handleGenerateDemo = async () => {
+    try {
+      setGeneratingDemo(true);
+      const token = localStorage.getItem("token");
+      await api.post(
+        "/demo-data",
+        {},
+        { headers: { Authorization: `Bearer ${token}` } },
+      );
+      window.location.reload();
+    } catch (error) {
+      alert(error.response?.data?.message || "Unable to generate demo data");
+      setGeneratingDemo(false);
+    }
+  };
   if (loading) {
     return <LoadingSpinner text="Loading Dashboard..." />;
   }
@@ -58,6 +76,9 @@ function Dashboard() {
             </div>
 
             <div className="dashboard-actions">
+              <button onClick={handleGenerateDemo} disabled={generatingDemo}>
+                {generatingDemo ? "Generating..." : "Generate Demo Data"}
+              </button>
               <button onClick={() => navigate("/income")}>+ Add Income</button>
 
               <button onClick={() => navigate("/expense")}>
@@ -89,6 +110,47 @@ function Dashboard() {
               value={`₹${dashboardData?.monthlyNet?.toLocaleString()}`}
               icon={<BsGraphUpArrow />}
             />
+
+            <StatCard
+              title="Savings Rate"
+              value={`${dashboardData?.monthlySavingsRate?.toFixed(1) || "0.0"}%`}
+              icon={<FaChartLine />}
+            />
+          </div>
+
+          <div
+            className={`budget-panel ${dashboardData?.budgetAlert || "not-set"}`}
+          >
+            <div>
+              <h2>Monthly Budget</h2>
+              {dashboardData?.monthlyBudget > 0 ? (
+                <p>
+                  ₹{Math.max(dashboardData.budgetRemaining, 0).toLocaleString()}{" "}
+                  remaining of ₹{dashboardData.monthlyBudget.toLocaleString()}
+                </p>
+              ) : (
+                <p>Set a budget in Settings to track monthly spending.</p>
+              )}
+            </div>
+            {dashboardData?.monthlyBudget > 0 && (
+              <div className="budget-progress">
+                <div
+                  className="budget-progress-fill"
+                  style={{
+                    width: `${Math.min(dashboardData.budgetUsedPercent, 100)}%`,
+                  }}
+                />
+              </div>
+            )}
+            <strong>
+              {dashboardData?.budgetAlert === "over-limit"
+                ? "Budget exceeded"
+                : dashboardData?.budgetAlert === "near-limit"
+                  ? "Near budget limit"
+                  : dashboardData?.budgetAlert === "on-track"
+                    ? `${dashboardData.budgetUsedPercent.toFixed(0)}% used`
+                    : "Not set"}
+            </strong>
           </div>
 
           {!hasData ? (
@@ -101,6 +163,9 @@ function Dashboard() {
               </p>
 
               <div className="empty-actions">
+                <button onClick={handleGenerateDemo} disabled={generatingDemo}>
+                  {generatingDemo ? "Generating..." : "Generate Demo Data"}
+                </button>
                 <button onClick={() => navigate("/income")}>
                   + Add Income
                 </button>

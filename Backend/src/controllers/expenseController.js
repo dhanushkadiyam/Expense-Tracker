@@ -1,7 +1,7 @@
 import Expense from "../models/Expense.js";
 export const addExpense = async (req, res) => {
   try {
-    const { title, amount, category, date } = req.body;
+    const { title, amount, category, date, paymentMethod, notes } = req.body;
 
     const userId = req.user.userId;
 
@@ -17,6 +17,8 @@ export const addExpense = async (req, res) => {
       amount,
       category,
       date,
+      paymentMethod,
+      notes,
     });
 
     res.status(201).json({
@@ -77,7 +79,7 @@ export const deleteExpense = async (req, res) => {
 export const updateExpense = async (req, res) => {
   try {
     const expenseId = req.params.id;
-    const { title, amount, category, date } = req.body;
+    const { title, amount, category, date, paymentMethod, notes } = req.body;
 
     const expense = await Expense.findById(expenseId);
     if (!expense) {
@@ -96,6 +98,8 @@ export const updateExpense = async (req, res) => {
     expense.amount = amount;
     expense.category = category;
     expense.date = date;
+    expense.paymentMethod = paymentMethod;
+    expense.notes = notes;
 
     await expense.save();
 

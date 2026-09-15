@@ -128,6 +128,17 @@
   outline: none;
 }
 
+.toolbar input[type="date"],
+.toolbar input[type="number"] {
+  min-width: 120px;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background: var(--card-bg);
+  color: var(--text-primary);
+  outline: none;
+}
+
 .modal-overlay {
   position: fixed;
 

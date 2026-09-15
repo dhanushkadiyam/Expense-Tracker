@@ -56,11 +56,67 @@
 .stats-grid {
   display: grid;
 
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
 
   gap: 20px;
 
   margin-bottom: 30px;
+}
+
+.budget-panel {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.8fr) minmax(180px, 1fr) auto;
+  align-items: center;
+  gap: 24px;
+  margin: 24px 0;
+  padding: 20px 24px;
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  background: var(--card-bg);
+  color: var(--text-primary);
+}
+
+.budget-panel h2,
+.budget-panel p {
+  margin: 0;
+}
+
+.budget-panel p {
+  margin-top: 6px;
+  color: var(--text-secondary);
+}
+
+.budget-panel.near-limit {
+  border-color: #d6a21f;
+}
+
+.budget-panel.over-limit {
+  border-color: var(--danger-color);
+}
+
+.budget-progress {
+  height: 10px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--hover-bg);
+}
+
+.budget-progress-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--primary-color);
+  transition: width 0.3s ease;
+}
+
+.over-limit .budget-progress-fill {
+  background: var(--danger-color);
+}
+
+@media (max-width: 768px) {
+  .budget-panel {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
 }
 .recent-grid {
   display: grid;

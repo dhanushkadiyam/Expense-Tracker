@@ -2,6 +2,10 @@ import { useState } from "react";
 import api from "../services/api";
 import "./TransactionForm.css";
 import { toast } from "react-toastify";
+import {
+  expenseCategories,
+  paymentMethods,
+} from "../constants/transactionPresets";
 
 function AddExpense({
   expenses,
@@ -16,6 +20,10 @@ function AddExpense({
   const [date, setDate] = useState(
     selectedExpense?.date ? selectedExpense.date.split("T")[0] : "",
   );
+  const [paymentMethod, setPaymentMethod] = useState(
+    selectedExpense?.paymentMethod || "Cash",
+  );
+  const [notes, setNotes] = useState(selectedExpense?.notes || "");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,6 +40,8 @@ function AddExpense({
             amount,
             category,
             date,
+            paymentMethod,
+            notes,
           },
           {
             headers: {
@@ -47,6 +57,8 @@ function AddExpense({
             amount,
             category,
             date,
+            paymentMethod,
+            notes,
           },
           {
             headers: {
@@ -75,6 +87,8 @@ function AddExpense({
       setAmount("");
       setCategory("");
       setDate("");
+      setPaymentMethod("Cash");
+      setNotes("");
 
       setSelectedExpense(null);
       setShowExpenseModal(false);
@@ -109,9 +123,15 @@ function AddExpense({
           <label>Category</label>
           <input
             type="text"
+            list="expense-categories"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           />
+          <datalist id="expense-categories">
+            {expenseCategories.map((item) => (
+              <option key={item} value={item} />
+            ))}
+          </datalist>
         </div>
 
         <div className="form-group">
@@ -121,6 +141,25 @@ function AddExpense({
             value={date}
             onChange={(e) => setDate(e.target.value)}
           />
+        </div>
+
+        <div className="form-group">
+          <label>Payment Method</label>
+          <select
+            value={paymentMethod}
+            onChange={(e) => setPaymentMethod(e.target.value)}
+          >
+            {paymentMethods.map((method) => (
+              <option key={method} value={method}>
+                {method}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="form-group">
+          <label>Notes</label>
+          <textarea value={notes} onChange={(e) => setNotes(e.target.value)} />
         </div>
 
         <button className="submit-btn" type="submit">

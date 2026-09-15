@@ -5,6 +5,7 @@ import expenseRoutes from "./routes/expenseRoutes.js";
 import incomeRoutes from "./routes/incomeRoutes.js";
 import dashboardRoutes from "./routes/dashboardRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import demoRoutes from "./routes/demoRoutes.js";
 
 const app = express();
 
@@ -20,5 +21,6 @@ app.use("/api/expenses", expenseRoutes);
 app.use("/api/income", incomeRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/demo-data", demoRoutes);
 
 export default app;

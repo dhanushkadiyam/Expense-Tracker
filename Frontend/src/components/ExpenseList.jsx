@@ -88,7 +88,7 @@ function ExpenseList({
                 </div>
 
                 <p>
-                  {expense.category} •{" "}
+                  {expense.category} • {expense.paymentMethod || "Cash"} •{" "}
                   {new Date(expense.date).toLocaleDateString("en-GB", {
                     day: "numeric",
                     month: "short",

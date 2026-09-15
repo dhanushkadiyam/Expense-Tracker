@@ -82,3 +82,30 @@ export const updateProfile = async (req, res) => {
     });
   }
 };
+
+export const updateBudget = async (req, res) => {
+  try {
+    const monthlyBudget = Number(req.body.monthlyBudget);
+
+    if (!Number.isFinite(monthlyBudget) || monthlyBudget < 0) {
+      return res.status(400).json({
+        message: "Monthly budget must be a non-negative number",
+      });
+    }
+
+    const user = await User.findByIdAndUpdate(
+      req.user.userId,
+      { monthlyBudget },
+      { new: true, runValidators: true },
+    ).select("-password");
+
+    res.status(200).json({
+      success: true,
+      user,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};

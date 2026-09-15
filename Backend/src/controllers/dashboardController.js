@@ -1,10 +1,12 @@
 import Income from "../models/Income.js";
 import Expense from "../models/Expense.js";
+import User from "../models/User.js";
 
 export const getDashboardData = async (req, res) => {
   try {
     const userId = req.user.userId;
 
+    const user = await User.findById(userId).select("monthlyBudget");
     const incomes = await Income.find({ userId });
     const expenses = await Expense.find({ userId });
 
@@ -36,6 +38,20 @@ export const getDashboardData = async (req, res) => {
       }
     }
     const monthlyNet = monthlyIncome - monthlyExpense;
+    const monthlySavingsRate =
+      monthlyIncome > 0 ? (monthlyNet / monthlyIncome) * 100 : 0;
+    const monthlyBudget = user?.monthlyBudget || 0;
+    const budgetUsedPercent =
+      monthlyBudget > 0 ? (monthlyExpense / monthlyBudget) * 100 : 0;
+    const budgetRemaining = monthlyBudget - monthlyExpense;
+    const budgetAlert =
+      monthlyBudget === 0
+        ? "not-set"
+        : budgetUsedPercent >= 100
+          ? "over-limit"
+          : budgetUsedPercent >= 80
+            ? "near-limit"
+            : "on-track";
     let totalIncome = 0;
 
     for (const income of incomes) {
@@ -79,6 +95,11 @@ export const getDashboardData = async (req, res) => {
       monthlyIncome,
       monthlyExpense,
       monthlyNet,
+      monthlySavingsRate,
+      monthlyBudget,
+      budgetRemaining,
+      budgetUsedPercent,
+      budgetAlert,
 
       recentIncome,
       recentExpenses,
