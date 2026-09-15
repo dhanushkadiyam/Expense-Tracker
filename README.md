@@ -112,6 +112,29 @@ cd Backend
 npm start
 ```
 
+## Docker Deployment
+
+Docker Compose runs the frontend, backend, and MongoDB together. MongoDB uses the named `expense_tracker_data` volume, so database data persists across container restarts and upgrades.
+
+Create a root `.env` file from `.env.example` and replace the JWT secret:
+
+```bash
+copy .env.example .env
+docker compose up --build -d
+```
+
+Open `http://localhost:5173`. The API is available at `http://localhost:5000`.
+
+Useful commands:
+
+```bash
+docker compose logs -f
+docker compose down
+docker compose down -v  # Stops services and permanently removes MongoDB data
+```
+
+For a cloud deployment, use a managed MongoDB connection string in `MONGO_URI` and set `VITE_API_URL` to the public backend URL when building the frontend. Never commit the root `.env` file or production secrets.
+
 ## API Overview
 
 All transaction, dashboard, and user-management routes require a bearer token unless stated otherwise.
