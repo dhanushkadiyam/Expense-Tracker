@@ -69,7 +69,7 @@ export const updateProfile = async (req, res) => {
         name,
         email,
       },
-      { new: true },
+      { returnDocument: "after" },
     ).select("-password");
 
     res.status(200).json({
@@ -96,7 +96,7 @@ export const updateBudget = async (req, res) => {
     const user = await User.findByIdAndUpdate(
       req.user.userId,
       { monthlyBudget },
-      { new: true, runValidators: true },
+      { returnDocument: "after", runValidators: true },
     ).select("-password");
 
     res.status(200).json({

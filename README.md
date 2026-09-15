@@ -58,6 +58,8 @@ JWT_SECRET=replace_with_a_long_random_secret
 
 `MONGO_URI` is optional. If the configured MongoDB server is unavailable, the backend starts `mongodb-memory-server` automatically for the current process.
 
+Set `NODE_ENV=production` in deployed environments. In production, the backend will fail startup instead of silently using an in-memory database when MongoDB is unavailable.
+
 ### Frontend environment
 
 To point the frontend at a deployed API, create `Frontend/.env`:

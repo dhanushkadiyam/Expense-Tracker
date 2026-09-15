@@ -79,6 +79,18 @@ test("authenticated finance workflow persists metadata and protects demo generat
   assert.equal(expense.body.expense.paymentMethod, "Card");
   assert.equal(expense.body.expense.notes, "API test expense");
 
+  const invalidExpense = await request("/api/expenses", {
+    method: "POST",
+    headers,
+    body: JSON.stringify({
+      title: "Invalid expense",
+      amount: -10,
+      category: "Food",
+      date: new Date().toISOString(),
+    }),
+  });
+  assert.equal(invalidExpense.status, 400);
+
   const budget = await request("/api/users/budget", {
     method: "PUT",
     headers,

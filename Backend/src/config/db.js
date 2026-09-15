@@ -15,6 +15,11 @@ const connectDB = async () => {
     console.log("MongoDB Connected Successfully to Database");
   } catch (err) {
     console.warn(`Could not connect to external MongoDB: ${err.message}`);
+
+    if (process.env.NODE_ENV === "production") {
+      throw err;
+    }
+
     console.log(
       "Starting embedded In-Memory MongoDB server for zero-setup execution...",
     );

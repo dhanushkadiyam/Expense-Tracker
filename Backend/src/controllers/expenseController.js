@@ -5,16 +5,25 @@ export const addExpense = async (req, res) => {
 
     const userId = req.user.userId;
 
-    if (!title || !amount || !category || !date) {
+    const numericAmount = Number(amount);
+
+    if (
+      !title ||
+      !category ||
+      !date ||
+      !Number.isFinite(numericAmount) ||
+      numericAmount <= 0 ||
+      Number.isNaN(new Date(date).getTime())
+    ) {
       return res.status(400).json({
-        message: "All fields are required",
+        message: "Provide a valid title, category, date, and positive amount",
       });
     }
 
     const expense = await Expense.create({
       userId,
       title,
-      amount,
+      amount: numericAmount,
       category,
       date,
       paymentMethod,
@@ -80,6 +89,20 @@ export const updateExpense = async (req, res) => {
   try {
     const expenseId = req.params.id;
     const { title, amount, category, date, paymentMethod, notes } = req.body;
+    const numericAmount = Number(amount);
+
+    if (
+      !title ||
+      !category ||
+      !date ||
+      !Number.isFinite(numericAmount) ||
+      numericAmount <= 0 ||
+      Number.isNaN(new Date(date).getTime())
+    ) {
+      return res.status(400).json({
+        message: "Provide a valid title, category, date, and positive amount",
+      });
+    }
 
     const expense = await Expense.findById(expenseId);
     if (!expense) {
@@ -95,7 +118,7 @@ export const updateExpense = async (req, res) => {
     }
 
     expense.title = title;
-    expense.amount = amount;
+    expense.amount = numericAmount;
     expense.category = category;
     expense.date = date;
     expense.paymentMethod = paymentMethod;
